@@ -14,23 +14,23 @@
   <body>
       <header>
             <nav class="navbar navbar-expand-lg navbar-light navcolor">
-                    <a class="navbar-brand" href="#"><h3>Bloggy</h3></a>
+                    <a class="navbar-brand" href="{{url_for('callHome')}}"><h3>Bloggy</h3></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                       <ul class="navbar-nav">
                         <li class="nav-item active">
-                          <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+                          <a class="nav-link" href="{{url_for('callHome')}}">Home<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="#">About</a>
+                          <a class="nav-link" href="{{url_for('callAbout')}}">About</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="#" id="login_link">Login</a>
+                          <a class="nav-link" href="{{url_for('callLogin')}}" id="login_link">Login</a>
                         </li>
                         <li class="nav-item">
-                                <a class="nav-link" href="#">Register</a>
+                                <a class="nav-link" href="{{url_for('callRegister')}}">Register</a>
                               </li>
                         
                       </ul>
@@ -39,7 +39,16 @@
       </header>
       <div class="container">
           
-        
+        {% with messages = get_flashed_messages(with_categories=true)%}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
             {% block content %}
             
             {% endblock %}
