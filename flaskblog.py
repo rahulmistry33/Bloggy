@@ -1,4 +1,3 @@
-from flask_sqlalchemy import SQLAlchemy 
 from flask import Flask,render_template,url_for,flash,redirect
 #this import for login and register from forms.py
 from forms import RegistrationForm,LoginForm
@@ -6,30 +5,6 @@ app = Flask(__name__)
 #for security and preventing cross site request forgery
 #generated using secrets module :D
 app.config['SECRET_KEY']='0501d344495cc373a2a73670ca42ae80'
-#this is for sqlite
-app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///site.db"
-db=SQLAlchemy(app)
-
-class User(db.Model):
-
-    id=db.column(db.Integer,primary_key=True)
-    username=db.column(db.String(20),unique=True,nullable=False)
-    email=db.column(db.String(20),unique=True,nullable=False)
-    image_file=db.column(db.String(20),nullable=False,default="default.png")
-    password=db.column(db.string(60),nullable=False)
-
-    def __repr__(self):
-        return f"{self.username},{self.email}.{self.image_file}"
-
-class Post(db.Model):
-    
-
-
-
-
-
-
-
 
 posts=[
     {
