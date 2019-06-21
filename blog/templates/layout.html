@@ -26,13 +26,20 @@
                         <li class="nav-item">
                           <a class="nav-link" href="{{url_for('callAbout')}}">About</a>
                         </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="{{url_for('callLogin')}}" id="login_link">Login</a>
-                        </li>
-                        <li class="nav-item">
-                                <a class="nav-link" href="{{url_for('callRegister')}}">Register</a>
-                              </li>
-                        
+                        {% if current_user.is_authenticated %}
+                          <li class="nav-item">
+                            <a class="nav-link" href="{{url_for('logout')}}" id="login_link">Logout</a>
+                          </li>
+                        {% else %}
+                          <li class="nav-item">
+                            <a class="nav-link" href="{{url_for('callLogin')}}" id="login_link">Login</a>
+                          </li>
+                          <li class="nav-item">
+                                  <a class="nav-link" href="{{url_for('callRegister')}}">Register</a>
+                          </li>
+                        {% endif %}
+
+                          
                       </ul>
                     </div>
                   </nav>
