@@ -23,3 +23,12 @@ body{
     margin:40px 100px 500px 100px;
     position:center;
 }
+.account-img {
+    height: 125px;
+    width: 125px;
+    margin-right: 20px;
+    margin-bottom: 16px;
+  }
+.accountinfo{
+    text-align: center;
+}
