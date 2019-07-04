@@ -1,0 +1,14 @@
+{
+    "params":
+    {
+        "local_server":"true",
+        "local_uri":"mysql://root:@localhost/blog",
+        "pro_uri":"mysql://root:@localhost/blog",
+        "fb_uri":"https://www.facebook.com/rahulmistry",
+        "tw_uri":"https://www.twitter.com/rahulmistry",
+        "gh_uri":"https://www.github.com/rahulmistry33",
+        "user-gmail":"rahul.mistry1378@gmail.com",
+        "user-password":"rahul.mistry",
+        "no-of-posts":5
+    }
+}
