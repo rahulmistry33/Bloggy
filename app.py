@@ -1,4 +1,4 @@
-from flask import Flask,render_template,url_for,request
+from flask import Flask,render_template,url_for,request,session
 from flask_sqlalchemy import SQLAlchemy
 import json 
 from flask_mail import Mail
@@ -9,6 +9,7 @@ with open("config.json","r") as c:
 
  
 app=Flask(__name__)
+app.secret_key = 'rahulrocks:D'
 app.config.update(
     MAIL_SERVER='smtp.gmail.com',
     MAIL_PORT='465',
@@ -57,8 +58,19 @@ def home():
 @app.route("/about")
 def about():
     return render_template("about.html",params=params)
-@app.route("/dashboard")
+
+@app.route("/dashboard",methods=["GET","POST"])
 def login():
+    if 'user' in session and session['user']==params["admin-username"]:
+        return render_template("dashboard.html",params=params)
+
+    if request.method=="POST":
+        uname=request.form.get('uname')
+        password=request.form.get('pass')
+        if uname==params["admin-username"] and password==params["admin-password"]:
+            session["user"]=uname
+            return render_template("dashboard.html",params=params)
+       
     return render_template("login.html",params=params)
 
 @app.route("/contact",methods=['GET','POST'])
