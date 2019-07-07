@@ -7,8 +7,8 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
-            <h1>Bloggy</h1>
-            <span class="subheading">A Blog for coders</span>
+            <h1>Admin Panel</h1>
+            <span class="subheading">Manage your posts and save them.</span>
           </div>
         </div>
       </div>
@@ -16,39 +16,31 @@
   </header>
 
   <!-- Main Content -->
-  {% for post in posts %}
-    
-  <li>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-        <div class="post-preview">
-          <a href="/posts_route/{{post.slug}}">
-            <h2 class="post-title">
-                {{post.title}}
-              
-            </h2>
-            <h3 class="post-subtitle">
-              {{post.subtitle}}
-            </h3>
-          </a>
-          <p class="post-meta">Posted by
-            <a href="#">Admin</a>
-            on {{post.date}}</p>
-        </div>
-        {{post.content[:25]}}...
-        <hr>
-      </li>
-        {% endfor %}
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Sno</th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in posts%}
+      <tr>
+        <td>{{post.sno}}</td>
+        <td>{{post.title}}</td>
+        <td>{{post.date}}</td>
+        <td><button class="btn btn-primary">Edit</button></td>
+        <td><button class="btn btn-primary">Delete</button></td>
         
-        
-        <!-- Pager -->
-        <div class="clearfix">
-          <a class="btn btn-primary float-right" style="margin:10px" href="#">Older Posts &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </div>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
  {% endblock %}
 

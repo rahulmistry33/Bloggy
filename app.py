@@ -62,14 +62,16 @@ def about():
 @app.route("/dashboard",methods=["GET","POST"])
 def login():
     if 'user' in session and session['user']==params["admin-username"]:
-        return render_template("dashboard.html",params=params)
+        posts=Posts.query.all()
+        return render_template("dashboard.html",params=params,posts=posts)
 
     if request.method=="POST":
         uname=request.form.get('uname')
         password=request.form.get('pass')
         if uname==params["admin-username"] and password==params["admin-password"]:
             session["user"]=uname
-            return render_template("dashboard.html",params=params)
+            posts=Posts.query_all()
+            return render_template("dashboard.html",params=params,posts=posts)
        
     return render_template("login.html",params=params)
 
