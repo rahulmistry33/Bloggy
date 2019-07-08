@@ -1,7 +1,8 @@
-from flask import Flask,render_template,url_for,request,session
+from flask import Flask,render_template,url_for,request,session,redirect
 from flask_sqlalchemy import SQLAlchemy
 import json 
 from flask_mail import Mail
+import datetime
 
 local_server=True
 with open("config.json","r") as c:
@@ -70,7 +71,7 @@ def login():
         password=request.form.get('pass')
         if uname==params["admin-username"] and password==params["admin-password"]:
             session["user"]=uname
-            posts=Posts.query_all()
+            posts=Posts.query.all()
             return render_template("dashboard.html",params=params,posts=posts)
        
     return render_template("login.html",params=params)
@@ -99,6 +100,40 @@ def contact():
 def posts_route(post_slug):
     postings=Posts.query.filter_by(slug=post_slug).first()
     return render_template("post.html",params=params,postings=postings)
+
+@app.route("/edit/<string:sno>",methods=['GET','POST'])
+def edit(sno):
+    if 'user' in session and session['user']==params["admin-username"]:
+        if request.method=='POST':
+            title=request.form.get('title')
+            subtitle=request.form.get('subtitle')
+            slug=request.form.get('slug')
+            content=request.form.get('content')
+            date=datetime.datetime.now()
+            
+            
+            if sno=="0":
+                post=Posts(title=title,slug=slug,content=content,subtitle=subtitle,date=date)
+                db.session.add(post)
+                db.session.commit()
+            else:
+                post=Posts.query.filter_by(sno=sno).first()
+                post.title=title
+                post.subtitle=subtitle
+                post.slug=slug
+                post.content=content
+                post.date=date
+                db.session.commit()
+                return redirect("/edit/"+sno)
+
+        post=Posts.query.filter_by(sno=sno).first()
+
+        
+        return render_template("edit.html",params=params,post=post)
+
+
+
+
 
 
 
