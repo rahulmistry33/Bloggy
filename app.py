@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 import json 
 from flask_mail import Mail
 import datetime
+import os
+from werkzeug import secure_filename
 
 local_server=True
 with open("config.json","r") as c:
@@ -19,6 +21,7 @@ app.config.update(
     MAIL_PASSWORD= params["user-password"]
 
 )
+app.config["UPLOAD_FOLDER"]=params["upload_location"]
 
 if local_server:
     app.config['SQLALCHEMY_DATABASE_URI'] = params["local_uri"]
@@ -93,6 +96,7 @@ def contact():
 
 
 
+
         
     return render_template("contact.html",params=params)
 
@@ -131,6 +135,19 @@ def edit(sno):
         
         return render_template("edit.html",params=params,post=post)
 
+@app.route("/uploader",methods=['GET','POST'])
+def uploader():
+    if 'user' in session and session['user']==params["admin-username"]:
+        if request.method=="POST":
+            f = request.files['file']
+            f.save(os.path.join(app.config["UPLOAD_FOLDER"],secure_filename(f.filename)))
+            return "Uploaded successfully"
+
+
+@app.route("/logout",methods=['GET','POST'])
+def logout():
+    session.pop('user')
+    return redirect('/dashboard')
 
 
 
